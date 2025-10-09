@@ -390,60 +390,17 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
 ```bash
 # Get dimensions and format
 file image.png
-identify image.png
 
 # Get file size
 ls -lh image.png
-
-# Get detailed info (requires ImageMagick)
-identify -verbose image.png
 ```
-
-### Make Images Square
-
-**Option 1: Crop to Square** (recommended for logos)
-```bash
-# Using ImageMagick
-convert input.png -gravity center -crop 1:1 output.png
-```
-
-**Option 2: Add Transparent Padding**
-```bash
-# Add padding to make square
-convert input.png -background none -gravity center -extent 1024x1024 output.png
-```
-
-**Option 3: Use Online Tools**
-- [Squoosh.app](https://squoosh.app)
-- [TinyPNG](https://tinypng.com)
-- [GIMP](https://www.gimp.org) (free desktop app)
-
-### Reduce File Size
-
-**Option 1: Resize Dimensions**
-```bash
-# Reduce from 2000x2000 to 1024x1024
-convert input.png -resize 1024x1024 output.png
-```
-
-**Option 2: Optimize PNG**
-```bash
-# Using pngquant
-pngquant --quality=65-80 input.png -o output.png
-
-# Using optipng
-optipng -o5 input.png
-```
-
-**Option 3: Convert to SVG** (if vector source available)
-- SVG files are often smaller
-- Scale to any size without quality loss
-- Preferred format when available
 
 **Recommended Sizes:**
 - **Small logos:** 256x256 or 512x512
 - **Standard logos:** 1024x1024
 - **Maximum size:** 2000x2000 (only if < 250 KB)
+
+**Note:** Images must be square (width = height) and < 250 KB. If your images don't meet these requirements, optimize them before uploading.
 
 ---
 
@@ -500,14 +457,7 @@ Asset PNG at terratestnet, usdc isn't square! Width: 1920, Height: 1080
 
 **Problem:** Image dimensions are 1920x1080 (not square)
 
-**Solution:**
-```bash
-# Crop to square
-convert usdc.png -gravity center -crop 1:1 usdc-square.png
-
-# Or resize to square
-convert usdc.png -resize 1024x1024! usdc-square.png
-```
+**Solution:** Make your image square (width = height) before uploading.
 
 ---
 
@@ -520,17 +470,7 @@ Image file size exceeds 250KB limit: 512KB
 
 **Problem:** Image is 512 KB (too large)
 
-**Solution:**
-```bash
-# Option 1: Reduce dimensions
-convert large.png -resize 1024x1024 smaller.png
-
-# Option 2: Optimize
-pngquant --quality=65-80 large.png -o optimized.png
-
-# Option 3: Use online compressor
-# Upload to https://tinypng.com
-```
+**Solution:** Optimize or reduce the image file size to under 250 KB before uploading.
 
 ---
 
@@ -846,35 +786,17 @@ testnets/nobletestnet/
 
 ## Tools & Resources
 
-### Command Line Tools
-```bash
-# Check dimensions
-file image.png
-identify image.png
-
-# Check size
-ls -lh image.png
-
-# Resize
-convert input.png -resize 1024x1024 output.png
-
-# Optimize
-pngquant --quality=65-80 input.png
-optipng -o5 input.png
-```
-
-### Online Tools
-- **Squoosh:** https://squoosh.app (compress & resize)
-- **TinyPNG:** https://tinypng.com (optimize PNG)
-- **SVGOMG:** https://jakearchibald.github.io/svgomg/ (optimize SVG)
-
 ### Validation
 ```bash
-# Install
+# Install validator
 npm install -g @chain-registry/cli@1.47.0
 
-# Validate
+# Run validation
 chain-registry validate --registryDir . --logLevel error
+
+# Check dimensions and size
+file image.png
+ls -lh image.png
 ```
 
 ---
@@ -884,7 +806,7 @@ chain-registry validate --registryDir . --logLevel error
 **Common Questions:**
 
 **Q: My image is 1920x1080. How do I make it square?**
-A: Crop to square or add transparent padding. See [Image Optimization Guide](#image-optimization-guide)
+A: You need to edit your image to make it square (width = height) before uploading.
 
 **Q: Can I use JPG instead of PNG?**
 A: Not recommended. PNG supports transparency and is preferred.
