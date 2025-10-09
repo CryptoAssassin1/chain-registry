@@ -39,51 +39,37 @@ Complete guide for adding, managing, and optimizing images in the chain registry
 
 ## Image Requirements
 
-### 1. Dimensions: MUST Be Square
+All images are automatically validated through CI checks. Here are the specific requirements:
 
-**Rule:** Width MUST equal Height (±1px tolerance)
+### 1. Image URI Existence
+Image URIs must correspond to actual files uploaded to the repository.
+
+### 2. File Storage Size: < 250 KB
+Images must not exceed 250 KB of storage space (applies to both PNG and SVG).
+
+### 3. Aspect Ratio: Must Be Square
+Images must be square - width must equal height (±1px tolerance). Added October 2024.
 
 ```bash
 # Check dimensions
-file image.png
 identify image.png
 
-# Examples:
-✅ 256x256   - GOOD
-✅ 512x512   - GOOD
-✅ 1024x1024 - GOOD
-✅ 2000x2000 - GOOD (but check file size)
-
-❌ 512x256   - REJECTED (not square)
-❌ 1920x1080 - REJECTED (not square)
-❌ 800x600   - REJECTED (not square)
+✅ 256x256, 512x512, 1024x1024   - GOOD
+❌ 512x256, 1920x1080            - NOT SQUARE
 ```
 
-**Why?** Ensures consistent display across all applications and wallets.
+### 4. PNG Authenticity
+PNGs must be authentic PNG images, not other formats (JPG, GIF, WebP) renamed with `.png` extension.
+
+### 5. SVG Complexity: < 1000 Shapes
+SVGs must have fewer than 1000 shapes. More than that indicates a poor-quality conversion from a raster image.
+
+### 6. SVG Authenticity: True Vector Graphics
+SVGs must be primarily made of vector components (shapes, paths, masks). Some raster-embedded content is allowed if sufficient vector components exist, but pure raster images wrapped as SVG are rejected.
 
 ---
 
-### 2. File Size: MUST Be < 250 KB
-
-**Rule:** Maximum 250 KB (251 KB with 1KB tolerance)
-
-```bash
-# Check file size
-ls -lh image.png
-
-# Examples:
-✅ 48 KB    - EXCELLENT
-✅ 120 KB   - GOOD
-✅ 248 KB   - GOOD
-❌ 350 KB   - TOO LARGE
-❌ 1.2 MB   - WAY TOO LARGE
-```
-
-**Why?** Keeps repository size manageable and loads fast for users.
-
----
-
-### 3. Supported Formats
+### 7. Supported Formats
 
 **Supported:**
 - ✅ **PNG** - Preferred for logos with transparency
@@ -106,7 +92,7 @@ ls -lh image.png
 
 ---
 
-### 4. File Naming
+### 8. File Naming
 
 **Convention:** Use lowercase, descriptive names
 
@@ -124,7 +110,7 @@ ls -lh image.png
 
 ---
 
-### 5. Directory Structure
+### 9. Directory Structure
 
 **Where images go:**
 
