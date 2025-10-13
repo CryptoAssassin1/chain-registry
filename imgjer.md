@@ -26,9 +26,9 @@ Complete guide for adding, managing, and optimizing images in the chain registry
 - ✅ Images must be **square** (width = height)
 - ✅ Images must be **< 250 KB** (file size)
 - ✅ Use **descriptive, lowercase filenames** (atom.png, osmo.svg, cosmos_chain.png)
-- ✅ Use **PNG** (supports transparency) or **SVG** (preferred when available)
+- ✅ Use **PNG** or **SVG** (preferred when available)
 - ✅ Add images **only where asset originates**, use `image_sync` for cross-chain tokens
-- ✅ Use `traces` to point to origin (naturally guides you to existing images)
+- ✅ Use `traces` to point to origin
 
 ---
 
