@@ -272,9 +272,6 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
   ]
 }
 ```
-
-**IMPORTANT:** Noble's USDC image actually references `_non-cosmos/ethereum/images/usdc.png`, NOT `noble/images/usdc.png`!
-
 ---
 
 ## Complete image_sync Example
@@ -748,9 +745,6 @@ testnets/osmosistestnet/
   ]
 }
 ```
-
-**Notice:** Testnet references mainnet `osmosis/images/osmo.png` (source), not origin.
-
 ---
 
 ## Quick Reference
@@ -794,10 +788,6 @@ A: Yes, lowercase is strongly recommended to avoid filesystem inconsistencies ac
 
 **Q: Can I add logotypes or brand kit?**
 A: No. We only want **token logos** (square) and **chain logos** (square). No full logotypes, wordmarks, or brand kit dumps.
-
----
-
-**Questions?** Join the [Cosmos Chain Registry Working Group](https://t.me/+OkM0SDZ-M0liNDdh) on Telegram.
 
 ---
 
