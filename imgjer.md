@@ -114,14 +114,13 @@ SVGs must be primarily made of vector components (shapes, paths, masks). Some ra
 Use **lowercase, descriptive names** that:
 - Correspond to the chain or asset
 - Are short and memorable
-- Avoid name collisions with other images
 
 ### ✅ GOOD Examples:
 ```bash
 atom.png              # Token symbol (short, clear)
 osmo.svg              # Token symbol
 cosmoshub.png         # Chain name
-cosmos_chain.png      # Chain logo (avoids collision)
+cosmos_chain.png      # Chain logo
 ion.png               # Specific token name
 usdc.png              # Common token name
 ```
@@ -138,8 +137,6 @@ my logo final.png     # Spaces not recommended
 ### Why Lowercase?
 
 Some filesystems are case-sensitive (Linux), others aren't (macOS, Windows). Using lowercase consistently avoids verification issues across different environments.
-
-**Discussion Point:** Should we implement **required lowercase** and do a bulk conversion? (Feedback welcome)
 
 ---
 
@@ -198,7 +195,6 @@ chain-registry/
 - Adding IBC-transferred tokens (ATOM on Osmosis)
 - Adding testnet versions of mainnet tokens
 - Adding wrapped/bridged tokens (axlUSDC, wBTC)
-- Adding synthetic or derivative tokens
 - Token originates elsewhere
 
 **Use `image_sync` instead!** (See next section)
@@ -260,8 +256,6 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
 }
 ```
 
-**Pro Tip:** When you add `traces`, it naturally points you to where the image already exists (or should exist), reducing duplicate checks!
-
 #### Step 3: Add image_sync to images
 
 ```json
@@ -292,12 +286,13 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
 
 ```json
 {
-  "description": "USDC on Noble Testnet",
-  "type_asset": "ics20",
+  "description": "USD Coin",
+  "type_asset": "sdk.coin",
   "denom_units": [
     {
       "denom": "uusdc",
-      "exponent": 0
+      "exponent": 0,
+      "aliases": ["microusdc"]
     },
     {
       "denom": "usdc",
@@ -310,10 +305,10 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
   "symbol": "USDC",
   "traces": [
     {
-      "type": "synthetic",
+      "type": "test-mintage",
       "counterparty": {
-        "chain_name": "forex",
-        "base_denom": "USD"
+        "chain_name": "noble",
+        "base_denom": "uusdc"
       },
       "provider": "Circle"
     }
@@ -325,20 +320,26 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
         "base_denom": "uusdc"
       },
       "png": "https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/ethereum/images/usdc.png",
-      "svg": "https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/ethereum/images/usdc.svg"
+      "svg": "https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/ethereum/images/usdc.svg",
+      "theme": {
+        "circle": true
+      }
     }
   ],
   "logo_URIs": {
     "png": "https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/ethereum/images/usdc.png",
     "svg": "https://raw.githubusercontent.com/cosmos/chain-registry/master/_non-cosmos/ethereum/images/usdc.svg"
-  }
+  },
+  "coingecko_id": "usd-coin"
 }
 ```
 
 **Notice:**
-- ✅ `traces` field present
-- ✅ `image_sync` references `noble` + `uusdc` (source, not origin)
-- ✅ Image URLs point to `_non-cosmos/ethereum/images/usdc.png` (actual file location)
+- ✅ `type`: `"test-mintage"` (testnet version of mainnet token)
+- ✅ `counterparty.chain_name`: `"noble"` (references mainnet Noble, not Ethereum origin)
+- ✅ `image_sync` references `noble` + `uusdc` (source = mainnet)
+- ✅ Image URLs point to `_non-cosmos/ethereum/images/usdc.png` (actual origin location)
+- ✅ `type_asset`: `"sdk.coin"` (native token on Noble testnet)
 - ❌ NO duplicate usdc.png uploaded to nobletestnet/images/
 
 ---
@@ -768,23 +769,19 @@ Use this checklist when adding images:
 - [ ] **Added `traces`** if using image_sync
 - [ ] **Correct GitHub URL** (cosmos/chain-registry, not your fork)
 - [ ] **Referenced in chain.json or assetlist.json** (depending on asset type)
-- [ ] **Ran local validation** before pushing
 
 ---
 
 ## Common Questions
 
-**Q: My image is 1920x1080. How do I make it square?**
-A: You need to edit your image to make it square (width = height) before uploading. Most image editors support cropping or resizing to square dimensions.
-
 **Q: Can I use JPG instead of PNG?**
-A: **No.** JPG is not allowed. PNG is required because it supports transparency, which is important for logos.
+A: **No.** JPG is not allowed. PNG is required.
 
 **Q: How do I know if I should use image_sync?**
 A: If the token originated from another chain (IBC transfer, testnet version, wrapped token), use `image_sync`. Only upload new images for assets that **originate** on the chain you're adding them to.
 
 **Q: Do I need both PNG and SVG?**
-A: Prefer SVG when available (smaller, scalable). PNG is accepted when SVG isn't available. Providing both is fine but not required.
+A: Prefer SVG when available (smaller, scalable).Providing both is fine but not required.
 
 **Q: My PR failed CI with "Image isn't square". What do I do?**
 A: Fix the image dimensions to be square (width = height), then push the changes.
@@ -795,7 +792,7 @@ A: `logo_URIs` is a legacy field for backward compatibility. `images[]` is the c
 **Q: Should image names be lowercase?**
 A: Yes, lowercase is strongly recommended to avoid filesystem inconsistencies across different operating systems (Linux is case-sensitive, macOS/Windows are not).
 
-**Q: Can I add logotypes or brand kit dumps?**
+**Q: Can I add logotypes or brand kit?**
 A: No. We only want **token logos** (square) and **chain logos** (square). No full logotypes, wordmarks, or brand kit dumps.
 
 ---
