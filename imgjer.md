@@ -91,6 +91,10 @@ SVGs must be primarily made of vector components (shapes, paths, masks). Some ra
 
 ```json
 // Both formats available
+"logo_URIs": {
+        "png": "https://raw.githubusercontent.com/cosmos/chain-registry/master/cosmoshub/images/atom.png",
+        "svg": "https://raw.githubusercontent.com/cosmos/chain-registry/master/cosmoshub/images/atom.svg"
+      },
 "images": [
   {
     "png": "https://raw.githubusercontent.com/cosmos/chain-registry/master/cosmoshub/images/atom.png",
