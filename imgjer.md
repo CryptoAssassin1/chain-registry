@@ -388,28 +388,6 @@ open mychain/images/token.png  # macOS
 xdg-open mychain/images/token.png  # Linux
 ```
 
-### Run Validation Script
-
-```bash
-# If you have the repo cloned locally, validation should work without installing @chain-registry/cli
-# Check if validation script exists first:
-ls -la validate_data.mjs
-
-# Run validation locally
-node validate_data.mjs
-
-# OR install CLI globally (alternative method)
-npm install -g @chain-registry/cli@latest
-chain-registry validate --registryDir . --logLevel error
-
-# Check for image-specific errors:
-# ❌ "Chain PNG ... isn't square!"
-# ❌ "Asset PNG ... isn't square!"
-# ❌ "Image file size exceeds 250KB"
-```
-
-**Note:** You typically don't need to install `@chain-registry/cli` if you have the repo cloned. The local validation script should work.
-
 ### Test in PR
 
 Once you create a PR:
@@ -787,30 +765,6 @@ Use this checklist when adding images:
 - [ ] **Correct GitHub URL** (cosmos/chain-registry, not your fork)
 - [ ] **Referenced in chain.json or assetlist.json** (depending on asset type)
 - [ ] **Ran local validation** before pushing
-
----
-
-## Tools & Resources
-
-### Validation
-
-```bash
-# Check if validation script exists locally
-ls -la validate_data.mjs
-
-# Run validation
-node validate_data.mjs
-
-# OR install CLI (alternative)
-npm install -g @chain-registry/cli@latest
-chain-registry validate --registryDir . --logLevel error
-
-# Check image dimensions
-identify image.png
-
-# Check image size
-ls -lh image.png
-```
 
 ---
 
