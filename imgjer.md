@@ -12,11 +12,10 @@ Complete guide for adding, managing, and optimizing images in the chain registry
 4. [When to Use image_sync](#when-to-use-image_sync)
 5. [File Naming Convention](#file-naming-convention)
 6. [Directory Structure](#directory-structure)
-7. [Image Optimization Guide](#image-optimization-guide)
-8. [Testing Images](#testing-images)
-9. [Common Image Mistakes](#common-image-mistakes)
-10. [Examples](#examples)
-11. [Quick Reference](#quick-reference)
+7. [Testing Images](#testing-images)
+8. [Common Image Mistakes](#common-image-mistakes)
+9. [Examples](#examples)
+10. [Quick Reference](#quick-reference)
 
 ---
 
@@ -338,37 +337,6 @@ cat noble/assetlist.json | jq '.assets[] | select(.symbol=="USDC") | .base'
 - ✅ Image URLs point to `_non-cosmos/ethereum/images/usdc.png` (actual origin location)
 - ✅ `type_asset`: `"sdk.coin"` (native token on Noble testnet)
 - ❌ NO duplicate usdc.png uploaded to nobletestnet/images/
-
----
-
-## Image Optimization Guide
-
-### Recommended Sizes
-
-**No official size requirement**, but common sizes in the registry:
-- **250x250, 500x500** - Common sizes
-- **256x256, 512x512** - Also common
-- **1024x1024** - High resolution
-- **2000x2000** - Maximum practical size (if < 250 KB)
-
-**Discussion Point:** Should we establish official size recommendations or limits? (Feedback welcome)
-
-### Check Current Image Specs
-
-```bash
-# Get dimensions and format
-identify image.png
-# Output: PNG image data, 1024 x 1024, 8-bit/color RGBA
-
-# Get file size
-ls -lh image.png
-# Output: 48K image.png
-```
-
-**Optimization Goal:**
-- Keep images < 250 KB
-- Prefer SVG when available (smaller, scalable)
-- Use reasonable dimensions (250-1024px most common)
 
 ---
 
